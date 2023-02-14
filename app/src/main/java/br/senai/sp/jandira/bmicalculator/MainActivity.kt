@@ -89,7 +89,7 @@ fun CalculatorScreen() {
                 OutlinedTextField(
                     value = weightState.value,
                     onValueChange = {
-                                    
+                                    weightState.value = it
                     },
                     modifier = Modifier
                         .fillMaxWidth()
