@@ -2,6 +2,7 @@ package br.senai.sp.jandira.bmicalculator
 
 import android.icu.text.ListFormatter.Width
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -10,10 +11,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,10 +24,12 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.senai.sp.jandira.bmicalculator.calculate.calculate
 import br.senai.sp.jandira.bmicalculator.ui.theme.BMICalculatorTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,8 +47,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun CalculatorScreen() {
 
-    var weightState = remember {
+    var weightState = rememberSaveable {
         mutableStateOf(value = "")
+    }
+
+    var heightState = rememberSaveable {
+        mutableStateOf(value = "")
+    }
+
+    var bmiState =  rememberSaveable {
+        mutableStateOf(value = "0.0")
     }
 
     Surface(
@@ -89,12 +102,14 @@ fun CalculatorScreen() {
                 OutlinedTextField(
                     value = weightState.value,
                     onValueChange = {
-                                    weightState.value = it
+                        Log.i("ds2m", it)
+                        weightState.value = it
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 24.dp),
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
                 Text(
                     text = stringResource(id = R.string.height_label),
@@ -102,17 +117,24 @@ fun CalculatorScreen() {
                         .padding(bottom = 8.dp)
                 )
                 OutlinedTextField(
-                    value = "Senai",
-                    onValueChange = {},
+                    value = heightState.value,
+                    onValueChange = {
+                        heightState.value = it
+                    },
                     modifier = Modifier
                         .fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(16.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
                 Spacer(
                     modifier = Modifier.height(46.dp)
                 )
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { bmiState.value = calculate(
+                        weight = weightState.value.toDouble(),
+                        height = heightState.value.toDouble()
+                    )
+                    },
                     modifier = Modifier
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp)
@@ -130,7 +152,7 @@ fun CalculatorScreen() {
                 Card(
                     modifier = Modifier.fillMaxSize(),
                     shape = RoundedCornerShape(
-                        topStart = 32.dp, topEnd =  32.dp
+                        topStart = 32.dp, topEnd = 32.dp
                     ),
                     backgroundColor = Color(
                         79,
