@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">BMI Calculator</string>
+    <string name="title">BMI Calculator</string>
+    <string name="weight_label">Your weight in KG</string>
+    <string name="height_label">Your height in cm</string>
+    <string name="button_calculator">Calculator</string>
+    <string name="your_score">Your score</string>
+    <string name="reset">Reset</string>
+    <string name="share">Share</string>
+    <string name="ideal_state">Congratulions! Your weight is ideal</string>
+</resources>
