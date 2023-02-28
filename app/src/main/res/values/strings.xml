@@ -7,5 +7,11 @@
     <string name="your_score">Your score</string>
     <string name="reset">Reset</string>
     <string name="share">Share</string>
-    <string name="ideal_state">Congratulions! Your weight is ideal</string>
+    <string name="ideal_state">Congratulations! Your weight is ideal</string>
+    <string name="underweight">Underweight</string>
+    <string name="normal_weight">Normal weight</string>
+    <string name="over_weight">Class I Obesity - Overweight</string>
+    <string name="obesity">Class II Obesity</string>
+    <string name="morbid_obesity">Class III Morbid Obesity</string>
+    <string name="title_activity_sing_up">SingUpActivity</string>
 </resources>
